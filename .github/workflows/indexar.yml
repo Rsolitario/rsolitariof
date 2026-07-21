@@ -1,0 +1,24 @@
+name: Indexar en Bing e IAs
+
+on:
+  push:
+    branches:
+      - main  # Se ejecuta cada vez que subes algo a la rama main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar mi código
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Instalar librerías necesarias
+        run: pip install requests
+
+      - name: Ejecutar script de indexación
+        run: python notificar.py
