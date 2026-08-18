@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 
 # --- CONFIGURACIÓN ---
 DOMINIO = "https://www.rsolitario.com"
-LLAVE = "mi-codigo-secreto-123"
+LLAVE = "7c806a4fa11a46aabc6ef75fa9a324ae"
 SITEMAP_URL = f"https://{DOMINIO}/sitemap.xml"
 
 def enviar_a_indexnow():
@@ -23,7 +23,7 @@ def enviar_a_indexnow():
         }
 
         # 3. Enviar a Bing / IndexNow
-        response = requests.post("https://www.bing.com/IndexNow", json=data)
+        response = requests.post("https://api.indexnow.org/IndexNow", json=data)
         
         if response.status_code == 200:
             print(f"Éxito: Se enviaron {len(urls)} URLs a IndexNow.")
