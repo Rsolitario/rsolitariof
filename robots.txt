@@ -1,0 +1,59 @@
+# robots.txt de Rsolitario
+# Todos los crawlers de IA y de buscadores tienen acceso completo.
+# Sitemap: https://www.rsolitario.com/sitemap.xml
+
+# --- Crawlers de IA / LLM (respuestas aumentadas) ---
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: PetalBot
+Allow: /
+
+# --- Buscadores convencionales ---
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+# --- Cualquier otro agente ---
+User-agent: *
+Allow: /
+
+Sitemap: https://www.rsolitario.com/sitemap.xml

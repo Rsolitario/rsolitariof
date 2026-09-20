@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="canonical" href="https://www.rsolitario.com/calculadora-de-roi-de-automatizacion/">
+<title>Calculadora de ROI de Automatización con IA — Rsolitario</title>
+<meta name="description" content="Calcula cuánto ahorra tu PyME en LATAM al automatizar soporte, data entry o WhatsApp con IA. Cálculo realista con salarios por país.">
+<style>
+  :root { --bg:#0f172a; --card:#ffffff; --accent:#2563eb; --muted:#64748b; --ok:#16a34a; --warn:#d97706; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: var(--bg); color: #1e293b; line-height: 1.5; padding: 2rem 1rem; }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  header { text-align: center; color: #fff; margin-bottom: 2rem; }
+  header h1 { font-size: 1.6rem; }
+  header p { color: #cbd5e1; margin-top: .4rem; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: var(--card); border-radius: 12px; padding: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+  .card h2 { font-size: 1.05rem; color: #0f172a; margin-bottom: 1rem; }
+  label { display: block; font-size: .85rem; font-weight: 600; color: var(--muted); margin: .9rem 0 .3rem; }
+  select, input[type=number] { width: 100%; padding: .55rem .7rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: .95rem; background: #fff; color: #1e293b; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+  .result-box { border-top: 2px solid #e2e8f0; margin-top: 1rem; padding-top: 1rem; }
+  .metric { display: flex; justify-content: space-between; padding: .45rem 0; border-bottom: 1px dashed #e2e8f0; font-size: .95rem; }
+  .metric b { color: #0f172a; }
+  .roi { text-align: center; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 1rem; margin-top: 1rem; }
+  .roi .big { font-size: 2rem; font-weight: 800; color: var(--accent); }
+  .roi p { font-size: .85rem; color: var(--muted); margin-top: .3rem; }
+  .disclaimer { background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: .8rem 1rem; font-size: .8rem; color: #92400e; margin-top: 1rem; }
+  .formula { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: .8rem 1rem; font-size: .8rem; color: var(--muted); margin-top: 1rem; white-space: pre-line; }
+  footer { text-align: center; color: #64748b; font-size: .8rem; margin-top: 2rem; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Calculadora de ROI de Automatización con IA</h1>
+    <p>Cálculo realista para PyMEs en Latinoamérica. Estimado, no promesa.</p>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Tu operación</h2>
+      <label for="pais">País</label>
+      <select id="pais"></select>
+
+      <label for="tarea">Tipo de tarea a automatizar</label>
+      <select id="tarea"></select>
+
+      <div class="row">
+        <div>
+          <label for="empleados">Empleados involucrados</label>
+          <input type="number" id="empleados" min="1" max="50" value="3">
+        </div>
+        <div>
+          <label for="horas">Horas/semana por empleado</label>
+          <input type="number" id="horas" min="1" max="40" value="10">
+        </div>
+      </div>
+
+      <label for="salario">Salario por hora (USD) — auto-según país y rol, edita si quieres</label>
+      <input type="number" id="salario" step="0.5" min="1">
+
+      <label for="inversion">Costo de implementación (USD)</label>
+      <input type="number" id="inversion" min="500" step="250">
+
+      <div class="row">
+        <div>
+          <label for="suscripciones">Suscripciones + API IA (USD/mes)</label>
+          <input type="number" id="suscripciones" min="0" step="10" value="80">
+        </div>
+        <div>
+          <label for="amortizacion">Meses de amortización</label>
+          <input type="number" id="amortizacion" min="12" max="60" step="6" value="36">
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Resultado</h2>
+      <div class="result-box">
+        <div class="metric"><span>Costo manual actual</span><b id="cmanual">—</b></div>
+        <div class="metric"><span>Costo mensual automatizado</span><b id="cauto">—</b></div>
+        <div class="metric"><span>Ahorro neto mensual</span><b id="ahorro">—</b></div>
+        <div class="metric"><span>Horas liberadas / semana</span><b id="horasLibres">—</b></div>
+      </div>
+
+      <div class="roi">
+        <div class="big" id="roiValor">—</div>
+        <p id="roiNota">Ajusta los valores para ver el estimado de recuperación.</p>
+      </div>
+
+      <div class="disclaimer">
+        <b>Importante (matemática honesta):</b> el ahorro supone que las horas liberadas se reasignan a tareas productivas. Si no se reasignan, el ahorro real ronda el <b>50%</b> del proyectado. Las automatizaciones no eliminan personas: liberan su tiempo. La cifra de recuperación es un <b>estimado</b>, no una garantía.
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1.5rem">
+    <h2>Cómo se calcula (transparencia total)</h2>
+    <div class="formula" id="formula"></div>
+  </div>
+
+  <footer>
+    Hecho por <a href="https://www.rsolitario.com" rel="noopener">Rsolitario</a> — Fábrica de Software y Automatización con IA para PyMEs · Precios de referencia LATAM, verificados con benchmarks de mercado.
+  </footer>
+</div>
+
+<script>
+(function () {
+  var SEMANAS = 4.33;
+  var H_SUPERVISION = 4;
+  var SIN_REASIGNACION = 0.5;
+
+  var PAISES = {
+    MX: "México",
+    CO: "Colombia",
+    AR: "Argentina",
+    CL: "Chile",
+    PE: "Perú"
+  };
+
+  var TAREAS = [
+    { id: "soporte", nombre: "Soporte / atención al cliente con bot", eficiencia: 0.6, defaultInversion: 5000 },
+    { id: "dataentry", nombre: "Data entry y conciliación de datos", eficiencia: 0.7, defaultInversion: 4000 },
+    { id: "informes", nombre: "Generación de informes y reportes", eficiencia: 0.6, defaultInversion: 3500 },
+    { id: "whatsapp", nombre: "Respuesta automática en WhatsApp (preventa)", eficiencia: 0.5, defaultInversion: 4500 },
+    { id: "citas", nombre: "Agenda de citas / reservas", eficiencia: 0.7, defaultInversion: 3000 },
+    { id: "moderacion", nombre: "Moderación / curaduría de contenido", eficiencia: 0.4, defaultInversion: 3000 }
+  ];
+
+  var SALARIO_POR_ROL = {
+    soporte:   { MX: 4.0, CO: 3.5, AR: 3.5, CL: 6.5, PE: 3.5 },
+    dataentry: { MX: 3.8, CO: 3.0, AR: 3.3, CL: 5.8, PE: 3.3 },
+    informes:  { MX: 4.8, CO: 3.8, AR: 4.0, CL: 7.0, PE: 3.8 },
+    whatsapp:  { MX: 4.5, CO: 3.5, AR: 3.8, CL: 6.5, PE: 3.8 },
+    citas:     { MX: 4.0, CO: 3.2, AR: 3.5, CL: 6.0, PE: 3.5 },
+    moderacion:{ MX: 4.0, CO: 3.2, AR: 3.5, CL: 6.0, PE: 3.5 }
+  };
+
+  var TARIFA_TECNICO = 15;
+
+  var selPais = document.getElementById("pais");
+  var selTarea = document.getElementById("tarea");
+  var inpEmpleados = document.getElementById("empleados");
+  var inpHoras = document.getElementById("horas");
+  var inpSalario = document.getElementById("salario");
+  var inpInversion = document.getElementById("inversion");
+  var inpSuscripciones = document.getElementById("suscripciones");
+  var inpAmortizacion = document.getElementById("amortizacion");
+
+  Object.keys(PAISES).forEach(function (k) {
+    var o = document.createElement("option");
+    o.value = k;
+    o.textContent = PAISES[k];
+    selPais.appendChild(o);
+  });
+
+  TAREAS.forEach(function (t) {
+    var o = document.createElement("option");
+    o.value = t.id;
+    o.textContent = t.nombre;
+    selTarea.appendChild(o);
+  });
+
+  selPais.value = "CO";
+  selTarea.value = "soporte";
+
+  function tareaActual() {
+    return TAREAS.find(function (t) { return t.id === selTarea.value; });
+  }
+
+  function syncDefaults() {
+    var t = tareaActual();
+    inpSalario.value = SALARIO_POR_ROL[t.id][selPais.value];
+    inpInversion.value = t.defaultInversion;
+    calcular();
+  }
+
+  selTarea.addEventListener("change", syncDefaults);
+  selPais.addEventListener("change", syncDefaults);
+
+  function num(id) { return parseFloat(document.getElementById(id).value) || 0; }
+
+  function fmt(n) {
+    return "$" + Math.round(n).toLocaleString("en-US");
+  }
+
+  function calcular() {
+    var emp = Math.max(num("empleados"), 1);
+    var horas = Math.max(num("horas"), 1);
+    var salario = Math.max(num("salario"), 0.1);
+    var inversion = Math.max(num("inversion"), 0);
+    var suscripciones = Math.max(num("suscripciones"), 0);
+    var amortizacion = Math.max(num("amortizacion") || 36, 1);
+    var t = tareaActual();
+
+    var cManual = emp * horas * salario * SEMANAS;
+    var amort = inversion / amortizacion;
+    var supervisacionMensual = H_SUPERVISION * TARIFA_TECNICO * SEMANAS;
+    var cAuto = suscripciones + amort + supervisacionMensual;
+    var ahorro = cManual - cAuto;
+
+    var horasLibres = emp * horas * t.eficiencia;
+
+    document.getElementById("cmanual").textContent = fmt(cManual);
+    document.getElementById("cauto").textContent = fmt(cAuto);
+    document.getElementById("ahorro").textContent = fmt(ahorro) + (ahorro < 0 ? " (aún no ahorra)" : "");
+    document.getElementById("horasLibres").textContent = Math.round(horasLibres) + " h";
+
+    var roiBig = document.getElementById("roiValor");
+    var roiNota = document.getElementById("roiNota");
+
+    if (ahorro <= 0) {
+      roiBig.textContent = "Sin retorno";
+      roiNota.textContent = "El costo de la automatización aún supera al de la operación manual. Revisa suscripciones o el volumen de horas.";
+    } else {
+      var roiMeses = inversion / ahorro;
+      if (roiMeses <= 24) {
+        roiBig.textContent = "~" + Math.round(roiMeses) + " meses";
+        roiNota.textContent = "Estimado de recuperación de la inversión inicial. Dentro del plazo recomendado (< 24 meses).";
+      } else {
+        roiBig.textContent = ">" + (roiMeses / 12).toFixed(1) + " años";
+        roiNota.textContent = "Recuperación estimada superior a 24 meses. Analiza si conviene reducir alcance o aumentar volumen.";
+      }
+    }
+
+    document.getElementById("formula").textContent =
+      "Costo manual = " + emp + " empleados × " + horas + " h/sem × $" + salario.toFixed(1) + " × " + SEMANAS + " semanas      →  " + fmt(cManual) + "/mes\n" +
+      "Costo automatizado = suscripciones $" + suscripciones + " + amortización ($" + fmt(inversion) + " / " + amortizacion + " meses = $" + fmt(amort) + ") + supervisión (" + H_SUPERVISION + " h × $15/h × " + SEMANAS + ")   →  " + fmt(cAuto) + "/mes\n" +
+      "Ahorro = " + fmt(cManual) + " − " + fmt(cAuto) + "  →  " + fmt(ahorro) + "/mes\n" +
+      "Recuperación = $" + fmt(inversion) + " / " + fmt(ahorro) + "  →  " + (roiMeses <= 999 ? "~" + Math.round(roiMeses) + " meses" : "sin retorno") + "\n" +
+      "Horas liberadas = " + emp + " × " + horas + " × " + Math.round(t.eficiencia * 100) + "% de eficiencia  →  " + Math.round(horasLibres) + " h/semana (si se reasignan)";
+  }
+
+  ["empleados", "horas", "salario", "inversion", "suscripciones", "amortizacion"].forEach(function (id) {
+    document.getElementById(id).addEventListener("input", calcular);
+  });
+
+  syncDefaults();
+})();
+</script>
+</body>
+</html>
