@@ -1,0 +1,1 @@
+import{n as e}from"./index-C4JVxwQb.js";var t=e.create({baseURL:`https://rsolitario.agentecripto.store/api/`});export{t};
