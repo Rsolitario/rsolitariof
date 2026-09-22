@@ -17640,3 +17640,156 @@ Si estás listo para dejar de pagar suscripciones que no se adaptan a ti y empez
 4. n8n.io — Documentación oficial y casos de uso. https://docs.n8n.io/
 5. Make.com — Guía de inversión y escalabilidad. https://www.make.com/en/pricing
 
+
+---
+
+## Cómo hacer el archivo txt de retenciones de iva del seniat
+
+[https://www.rsolitario.com/como-hacer-el-archivo-txt-de-retenciones-de-iva-del-seniat/](https://www.rsolitario.com/como-hacer-el-archivo-txt-de-retenciones-de-iva-del-seniat/)
+
+Aprende el formato 2026 del TXT de retenciones de IVA del SENIAT: las 16 columnas, los 3 errores de rechazo del portal y cómo declarar en cero. Guía verificada y copiable.
+
+# Cómo hacer el archivo TXT de retenciones de IVA del SENIAT: formato 2026 de 16 columnas sin rechazos
+
+Si eres agente de retención del IVA y necesitas armar el archivo TXT para el SENIAT, esta guía tiene exactamente lo que buscas: la estructura oficial de las 16 columnas, un ejemplo copiable, los 3 errores por los que el portal te rebota el archivo y qué hacer cuando declaras "en cero". Todo alineado con la Providencia SNAT/2025/000054 (Gaceta Oficial N° 43.171 del 16/07/2025) y el instructivo técnico vigente.
+
+## ¿Cuál es la estructura del archivo TXT de retenciones de IVA?
+
+El archivo TXT de retenciones de IVA del SENIAT tiene 16 columnas separadas por tabulador, sin espacios en blanco. Cada línea registra el RIF del agente, el período (aaaamm), la fecha (aaaa-mm-dd), los montos con punto decimal, el comprobante de 14 dígitos (AAAAMM más 8 correlativos) y la alícuota; los campos vacíos se completan con cero.
+
+Este formato corresponde al registro único definido en el instructivo técnico de declaración de retenciones de IVA del SENIAT, que es el documento oficial que valida el portal antes de aceptar tu declaración. No se aceptan comas decimales, separadores de miles ni espacios en blanco.
+
+## Las 16 columnas del TXT (técnica oficial)
+
+Cada línea del archivo debe tener exactamente 16 campos, separados por tabulación (`tab`). La tabla siguiente resume el nombre del campo, el formato exigido y la regla de relleno:
+
+| # | Campo técnico | Tipo | Ancho | Formato exacto y regla de relleno |
+|---|---|---|---|---|
+| 1 | RIF_Contribuyente | Carácter | 10 | RIF del agente de retención. Empieza en V, E, J, P o G. No puede ser cero ni quedar en blanco. |
+| 2 | Periodo_Impositivo | Número | 6 | `aaaamm` (ej. 202608). Debe coincidir con el período quincenal que declares. |
+| 3 | Fecha_Documento | Carácter | 10 | `aaaa-mm-dd` con guiones (ej. 2026-08-03). La fecha debe ser menor o igual al período que declaras. |
+| 4 | Tipo_Operacion | Carácter | 1 | `C` = Compra, `V` = Venta (mayúscula). En retenciones de IVA se usa C. |
+| 5 | Tipo_Documento | Carácter | 2 | `01` Factura, `02` Nota de Débito, `03` Nota de Crédito, `04` Certificación, `05` Importación, `06` Exportación. |
+| 6 | RIF_Comprador_Vendedor | Carácter | 10 | RIF del proveedor, sin espacios ni guiones. Si no tiene RIF: `0` (en ese caso el portal valida retención del 100%). |
+| 7 | Numero_Documento | Carácter | 20 | Número de la factura o documento. Sin espacios entre caracteres. Si no aplica: `0`. |
+| 8 | Numero_Control_Documento | Carácter | 20 | Número de control de imprenta. Sin espacios. Si no aplica: `0`. |
+| 9 | Monto_Documento | Número | 15(,2) | Monto total del documento, mayor que 0. Punto decimal, sin separador de miles. |
+| 10 | Base_Imponible | Número | 15(,2) | Base gravada sin IVA ni exentos. Punto decimal. Si no aplica: `0.00`. |
+| 11 | Monto_IVA | Número | 15(,2) | IVA retenido. Se calcula: Base Imponible × % retención (75%) × alícuota. Las Notas de Crédito restan y las de Débito suman. |
+| 12 | Numero_Documento_Afectado | Carácter | 20 | Factura que origina la N/C o N/D. Si no aplica: `0`. |
+| 13 | Numero_Comprobante | Número | 14 | `AAAAMM` + 8 correlativos completados con ceros a la izquierda. Ej. `20260800000001`. Único y secuencial por período. |
+| 14 | Monto_Exento_IVA | Número | 15(,2) | Operaciones exentas, exoneradas o no sujetas. Punto decimal. Si no aplica: `0.00`. |
+| 15 | Alicuota | Número | 5(,2) | Alícuota aplicada a la factura (ej. `16.00`). Si la base es 0, la alícuota también debe ser 0. |
+| 16 | Numero_Expediente | Carácter | 15 | Número de planilla de importación (C-80/C-81/C-86), sin guiones. Si no aplica: `0`. |
+
+### Reglas de oro: tabulador, punto decimal y cero
+
+- Todas las columnas se separan con un **tabulador** (`\t`), no con espacios ni punto y coma.
+- El separador decimal es el **punto** (`.`) y los montos llevan **dos decimales**: `25000.00`, nunca `25.000,00`.
+- **No hay campos vacíos**: todo lo que no aplique se completa con `cero` (`0` o `0.00` según el tipo del campo).
+- Grábate este archivo desde Excel como *Texto (delimitado por tabulaciones) (*.TXT)*.
+
+## Línea de ejemplo correcta para copiar
+
+Ejemplo de una línea real (una factura de compra de Bs. 116,000.00 con IVA del 16% y retención del 75%):
+
+```
+J999999999	202608	2026-08-05	C	01	J123456789	0001254	00000000	116000.00	100000.00	12000.00	0	20260800000001	0.00	16.00	0
+```
+
+Explicación campo a campo:
+
+- **RIF_Contribuyente** `J999999999`: tu RIF como agente de retención.
+- **Periodo_Impositivo** `202608`: período que declaras (aaaamm).
+- **Fecha_Documento** `2026-08-05`: fecha de la factura.
+- **Tipo_Operacion** `C`: compra.
+- **Tipo_Documento** `01`: factura.
+- **RIF_Comprador_Vendedor** `J123456789`: RIF del proveedor.
+- **Numero_Documento** `0001254`: número del documento.
+- **Numero_Control_Documento** `00000000`: número de control de imprenta; si el documento no lo tiene, se completa con `0`.
+- **Monto_Documento** `116000.00`: total de la factura con IVA incluido.
+- **Base_Imponible** `100000.00`: base gravada sin IVA.
+- **Monto_IVA** `12000.00`: IVA retenido = 100.000 × 16% × 75% = 12.000.
+- **Numero_Documento_Afectado** `0`: no es nota de crédito/débito.
+- **Numero_Comprobante** `20260800000001`: 14 dígitos (AAAAMM + 8 correlativos).
+- **Monto_Exento_IVA** `0.00` y **Numero_Expediente** `0`: no aplican operaciones exentas ni importaciones.
+
+## Los 3 errores por los que el SENIAT te rebota el TXT (y cómo solucionarlos)
+
+Estos tres son los responsables de casi todos los rechazos en el portal. Son mensajes reales que devuelve el sistema de carga.
+
+### 1. Faltan columnas o hay espacios en blanco
+El portal devuelve: `Existe una línea en el Documento que no tiene la cantidad de campos requeridos (16 columnas no vacías)`.
+**Causa:** copiaste una fila de Excel con columnas vacías al final, o el archivo se guardó con espacios en vez de tabulador.
+**Solución:** que cada línea tenga exactamente 16 campos separados por `tab`, y que ningún campo quede en blanco: rellena con `0`.
+
+### 2. Coma decimal en vez de punto, o separador de miles
+El portal devuelve: `Formato errado en la columna monto del documento. Verifique que la columna contenga datos numéricos con dos posiciones decimales.`
+**Causa:** `25.000,00` o `25000,00` en lugar de `25000.00`. La coma es el error más común porque es el formato local de Excel.
+**Solución:** obliga a las columnas de montos a formato numérico con dos decimales y separador de *punto*, y guarda desactivando los separadores de miles.
+
+### 3. Número de comprobante mal formado
+El portal devuelve: `Formato errado en la columna número de comprobante. Verifique que la columna contenga catorce (14) caracteres, en el formato AAAAMMSSSSSSSS.`
+**Causa:** envías 13 dígitos, repites un secuencial dentro del mismo período, o el año/mes del comprobante no coincide con el período que declaras.
+**Solución:** el comprobante siempre es `AAAAMM` + 8 correlativos (ceros a la izquierda), y el período del comprobante debe ser igual al período de imposición declarado.
+
+> **¿Te pasa esto en cada quincena?** No pierdas la tarde corrigiendo línea por línea: mándanos tus facturas y te devolvemos el TXT listo. [Mándalas aquí →](https://wa.me/584245734959?text=Hola%2C%20quiero%20procesar%20mi%20lote%20gratis%20de%2015%20facturas%20y%20recibir%20el%20archivo%20TXT%20de%20retenciones%20de%20IVA%20del%20SENIAT)
+
+## ¿Cómo declarar las retenciones de IVA en cero? (mitos vs. realidad)
+
+Esta es la duda que más se repite entre los agentes que quedaron sin operaciones sujetas a retención en la quincena.
+
+### El mito del "no tengo retenciones, no declaro"
+**Falso.** La Providencia SNAT/2025/000054 exige presentar la declaración de retenciones de IVA cada quincena **incluso si no practicaste ninguna retención**. No declarar te deja expuesto a sanciones y a que el portal te marque el período como pendiente. La declaración "en cero" es una declaración válida y obligatoria, no una opción.
+
+### El modelo oficial de una línea en cero
+Cuando no hay operaciones sujetas a retención, el archivo TXT lleva una **única línea** con todos los montos en cero. Partiendo del formato oficial de 16 columnas:
+
+```
+J999999999	202608	0	C	0	0	1	0	0.00	0.00	0.00	0	0	0.00	0.00	0
+```
+
+Observa dos detalles al copiarlo:
+- La **fecha** y el **RIF del comprador/vendedor** van en `0` (no hay documentos que reportar).
+- Los montos van en `0.00` **con punto decimal**, incluida la alícuota (`0.00`). Algunos modelos viejos en internet lo muestran con coma (`0,00`): **no lo copies así**, el portal lo rechaza.
+
+### La letra pequeña: una vez registrada, no se anula
+El instructivo del SENIAT lo dice expresamente: *"una vez registrada la declaración, esta no podrá ser anulada"*. Si detectas un error después de registrar, el ajuste no se hace borrando: se corrige en la **próxima declaración** (los ajustes se permiten, por ejemplo, con notas de crédito/débito que restan o suman al monto de IVA). Por eso siempre conviene usar la **prueba de carga de archivo (Retención IVA – prueba carga de archivo)** del portal antes de declarar de verdad.
+
+## ¿Estás atrapado armando el TXT a mano?
+
+**¿En quincena y todavía sin el TXT?**
+Envía tu lote de **15 facturas reales** por WhatsApp y FacturaIA te devuelve el **archivo TXT oficial del SENIAT** listo para cargar, más tu **Libro de Compras en Excel**. Gratis, sin tarjetas y en menos de 24 horas.
+
+**[Probar gratis con 15 facturas →](https://wa.me/584245734959?text=Hola%2C%20quiero%20procesar%20mi%20lote%20gratis%20de%2015%20facturas%20y%20recibir%20el%20archivo%20TXT%20de%20retenciones%20de%20IVA%20del%20SENIAT)**
+
+## Preguntas frecuentes
+
+**¿Qué extensión y separador debe tener el archivo?**
+Formato `.txt` y cada columna separada por tabulador (`tab`), sin espacios en blanco.
+
+**¿Puedo usar la coma como separador decimal?**
+No. El SENIAT solo acepta el punto (`.`) como separador de decimales y sin separadores de miles.
+
+**¿El número de comprobante siempre tiene 14 dígitos?**
+Sí: `AAAAMM` (año y mes) más 8 dígitos correlativos únicos por período, completados con ceros a la izquierda.
+
+**Si no hice retenciones en la quincena, ¿igual debo declarar?**
+Sí. Se presenta la declaración en cero (una sola línea con montos en 0.00) dentro del calendario quincenal.
+
+**¿Puedo tener varios proveedores en un mismo archivo?**
+El instructivo valida que el RIF del proveedor sea el mismo en todos los registros del archivo; si tus facturas son de varios proveedores, arma un archivo por proveedor y valídala con la prueba de carga.
+
+**¿Qué pasa si registro una declaración con error?**
+No se anula. El ajuste se hace en la siguiente declaración del período correspondiente.
+
+## Base normativa de esta guía
+
+- **Providencia Administrativa SNAT/2025/000054** (Gaceta Oficial N° 43.171 del 16/07/2025): agentes de retención del IVA, porcentajes (75% regla general; 100% en casos específicos), enteramiento quincenal. Vigente desde el 01/08/2025; deroga la SNAT/2015/0049.
+- **Instructivo técnico de declaración de retenciones de IVA RI_DRIVA2020-IT01V3_0_0 (sept. 2020)**: estructura de 16 columnas, validaciones y tabla de errores del portal.
+- Alícuota general del IVA: 16%.
+
+---
+
+*¿Te fue útil? Comparte esta guía con el contador o auxiliar que la está pasando mal con el TXT. Este artículo se actualiza con cada cambio normativo del SENIAT.*
+

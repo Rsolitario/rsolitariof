@@ -155,6 +155,7 @@ Rsolitario es una empresa de desarrollo de software (fábrica de software) con b
 - [¿Cuánto cuesta un sistema de gestión de propiedades](https://www.rsolitario.com/cuanto-cuesta-un-sistema-de-gestion-de-propiedades/): La inversión en un sistema de gestión de propiedades con Proptech para una inmobiliaria o administrador de edificios oscila entre **$2,500 y $24,000 USD**
 - [¿Cuánto cuesta un software logistica outsourcing a medida](https://www.rsolitario.com/cuanto-cuesta-un-software-logistica-outsourcing-a-medida/): Un software logistica outsourcing a medida representa una inversión estratégica que va desde los $2,500 hasta los $24,000 USD, dependiendo de la complejida
 - [n8n vs Make vs Zapier para empresas Latam: ¿Cuál es la mejor](https://www.rsolitario.com/n8n-vs-make-vs-zapier-para-empresas-latam-cual-es-la-mejor/): La comparativa n8n vs Make vs Zapier para empresas Latam no tiene un ganador absoluto. Para volúmenes bajos, Zapier y Make son accesibles; para escalar, n8
+- [Cómo hacer el archivo txt de retenciones de iva del seniat](https://www.rsolitario.com/como-hacer-el-archivo-txt-de-retenciones-de-iva-del-seniat/)
 
 
 ## Notas
