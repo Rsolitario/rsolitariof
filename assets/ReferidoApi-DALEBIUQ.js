@@ -1,0 +1,1 @@
+import{n as e,t}from"./index-DI0AVzY4.js";var n=e.create({baseURL:`https://rsolitario.agentecripto.store`});n.interceptors.request.use(e=>{let n=t.getState().token;return n&&(e.headers.Authorization=`Bearer ${n}`),e}),n.interceptors.response.use(e=>e,e=>(e.response?.status===401&&(t.getState().logout(),window.location.href=`/referido/login`),Promise.reject(e)));export{n as t};

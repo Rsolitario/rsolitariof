@@ -17714,6 +17714,8 @@ Explicación campo a campo:
 - **Numero_Comprobante** `20260800000001`: 14 dígitos (AAAAMM + 8 correlativos).
 - **Monto_Exento_IVA** `0.00` y **Numero_Expediente** `0`: no aplican operaciones exentas ni importaciones.
 
+![Errores a pensar](https://www.rsolitario.com/img/hombre-pensante.webp)
+
 ## Los 3 errores por los que el SENIAT te rebota el TXT (y cómo solucionarlos)
 
 Estos tres son los responsables de casi todos los rechazos en el portal. Son mensajes reales que devuelve el sistema de carga.
@@ -17755,6 +17757,8 @@ Observa dos detalles al copiarlo:
 
 ### La letra pequeña: una vez registrada, no se anula
 El instructivo del SENIAT lo dice expresamente: *"una vez registrada la declaración, esta no podrá ser anulada"*. Si detectas un error después de registrar, el ajuste no se hace borrando: se corrige en la **próxima declaración** (los ajustes se permiten, por ejemplo, con notas de crédito/débito que restan o suman al monto de IVA). Por eso siempre conviene usar la **prueba de carga de archivo (Retención IVA – prueba carga de archivo)** del portal antes de declarar de verdad.
+
+![txt a mano](https://www.rsolitario.com/img/documentos-reportes.webp)
 
 ## ¿Estás atrapado armando el TXT a mano?
 
